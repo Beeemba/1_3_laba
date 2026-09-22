@@ -59,12 +59,12 @@ SafeArray resizeArray(const SafeArray& oldArr, int newSize)
     return newArr;
 }
 
-void deleteArray(SafeArray& arr)
-{
-    delete[] arr.data;
-    arr.data = nullptr;
-    arr.size = 0;
-}
+void deleteArray(SafeArray& arr) 
+{ 
+    delete[] arr.data; 
+    arr.data = nullptr; 
+    arr.size = 0; 
+} 
 
 int main()
 {
@@ -91,9 +91,9 @@ std::cout << "\nУменьшение размера с 8 до 4:\n";
 SafeArray resizedDown = resizeArray(resizedUp, 4);
 printSafe(resizedDown);
 
-deleteArray(Arr);
-deleteArray(resizedUp);
-deleteArray(resizedDown);
+deleteArray(Arr); 
+deleteArray(resizedUp); 
+deleteArray(resizedDown); 
 std::cout << "\nПамять освобождена.\n";
 return 0;
 }
