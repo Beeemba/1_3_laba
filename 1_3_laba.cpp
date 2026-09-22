@@ -25,17 +25,30 @@ if (index < 0 || index >= arr.size)
 return arr.data[index];
 }
 
+void printSafe(const SafeArray& arr)
+{
+    std::cout << "Массив (размер " << arr.size << "): ";
+    for (int i = 0; i < arr.size; i++)
+    {
+        std::cout << arr.data[i] << " ";
+    }
+    std::cout << "\n";
+}
+
 int main()
 {
 SafeArray Arr = createArray(5);
-std::cout << "Создан массив размером 5\n";
+std::cout << "Создан массив\n";
+printSafe(Arr);
 std::cout <<"Заполнение массива через getElement:\n";
 for (int i = 0; i < Arr.size; i++)
 {
     getElement(Arr, i) = (i + 1) * 50;
 }
+printSafe(Arr);
 std::cout << " \ngetElement(Arr, 2) = 999:\n";
 getElement(Arr, 2) = 999;
+printSafe(Arr);
 std::cout << "\nПопытка доступа за границами (getElement(Arr,20)):\n";
 int& ref = getElement(Arr, 20);
 std::cout << "Возвращена ссылка на заглушку: " << ref << "\n";
