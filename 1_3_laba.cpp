@@ -1,11 +1,20 @@
 #include <iostream>
 
+/**
+ * @brief Структура для безопасной работы с динамическим массивом
+ */
 struct SafeArray
 {
     int* data;
     int size;
 };
 
+/**
+ * @brief Создает безопасный массив заданного размера
+ * @param size Размер массива
+ * @return Структура SafeArray с выделенной памятью
+ * @note Все элементы инициализируются нулями
+ */
 SafeArray createArray(int size)
 {
     SafeArray arr;
@@ -14,6 +23,13 @@ SafeArray createArray(int size)
     return arr;
 }
 
+/**
+ * @brief Возвращает ссылку на элемент массива с проверкой границ
+ * @param arr Ссылка на SafeArray
+ * @param index Индекс элемента
+ * @return Ссылка на элемент массива или на статическую заглушку
+ * @note При выходе за границы выводит ошибку и возвращает ссылку на dummy
+ */
 int& getElement(SafeArray& arr, int index)
 {
 static int a = 0;
@@ -25,6 +41,11 @@ if (index < 0 || index >= arr.size)
 return arr.data[index];
 }
 
+/**
+ * @brief Выводит безопасный массив на экран
+ * @param arr Константная ссылка на SafeArray
+ * @note Не изменяет данные (использует const)
+ */
 void printSafe(const SafeArray& arr)
 {
     std::cout << "Массив (размер " << arr.size << "): ";
@@ -35,6 +56,13 @@ void printSafe(const SafeArray& arr)
     std::cout << "\n";
 }
 
+/**
+ * @brief Изменяет размер массива
+ * @param oldArr Константная ссылка на исходный массив
+ * @param newSize Новый размер
+ * @return Новый SafeArray с измененным размером
+ * @note При уменьшении выводит удаленные элементы, новые элементы = 0
+ */
 SafeArray resizeArray(const SafeArray& oldArr, int newSize)
 {
     SafeArray newArr;
@@ -59,6 +87,11 @@ SafeArray resizeArray(const SafeArray& oldArr, int newSize)
     return newArr;
 }
 
+/**
+ * @brief Освобождает память и обнуляет указатель
+ * @param arr Ссылка на SafeArray
+ * @note Предотвращает dangling pointers
+ */
 void deleteArray(SafeArray& arr) 
 { 
     delete[] arr.data; 
