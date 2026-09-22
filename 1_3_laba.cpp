@@ -35,6 +35,37 @@ void printSafe(const SafeArray& arr)
     std::cout << "\n";
 }
 
+SafeArray resizeArray(const SafeArray& oldArr, int newSize)
+{
+    SafeArray newArr;
+    newArr.size = newSize;
+    newArr.data = new int [newSize]{};
+    int copy = (oldArr.size < newSize) ? oldArr.size : newSize;
+    
+    if (newSize < oldArr.size)
+    {
+        std::cout << "Удаленные элементы: ";
+        for (int i = newSize; i < oldArr.size; i++)
+        {
+            std::cout << oldArr.data[i] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    for (int i = 0; i < copy; i++)
+    {
+        newArr.data[i] = oldArr.data[i];
+    }
+    return newArr;
+}
+
+void deleteArray(SafeArray& arr)
+{
+    delete[] arr.data;
+    arr.data = nullptr;
+    arr.size = 0;
+}
+
 int main()
 {
 SafeArray Arr = createArray(5);
@@ -52,5 +83,17 @@ printSafe(Arr);
 std::cout << "\nПопытка доступа за границами (getElement(Arr,20)):\n";
 int& ref = getElement(Arr, 20);
 std::cout << "Возвращена ссылка на заглушку: " << ref << "\n";
+std::cout << "\nУвеличение размера с 5 до 8:\n";
+SafeArray resizedUp = resizeArray(Arr, 8);
+printSafe(resizedUp);
+
+std::cout << "\nУменьшение размера с 8 до 4:\n";
+SafeArray resizedDown = resizeArray(resizedUp, 4);
+printSafe(resizedDown);
+
+deleteArray(Arr);
+deleteArray(resizedUp);
+deleteArray(resizedDown);
+std::cout << "\nПамять освобождена.\n";
 return 0;
 }
